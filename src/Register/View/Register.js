@@ -1,26 +1,30 @@
 import React, { useState } from "react";
-import { Button, Grid,  Paper, TextField } from "@mui/material";
+import { Button, Grid, Paper, TextField } from "@mui/material";
 import { toast } from "react-toastify";
 import { Form, Formik } from "formik";
 
-import validationSchemaLogin from "../Utils/validationSchemaLogin";
 import { encryption } from "../../Utils/crypt";
 import apis from "../../api/apiConfig";
+import validationSchemaRegister from "../Utils/validationSchemaRegister";
 import { Link } from "react-router-dom";
 
-const LogIn = () => {
+const Register = () => {
   // const classes = useStyles();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
 
   const handleSubmit = async (values) => {
     try {
       const encryptedMail = encryption(values.email);
       const encryptedPass = encryption(values.password);
-      const data = { userMail: encryptedMail, password: encryptedPass };
-      const resp = await apis.postLogin(data);
-
+      const encryptedCPass = encryption(values.confirmationPassword);
+      const data = {
+        userMail: encryptedMail,
+        password: encryptedPass,
+        confirmationPassword: encryptedCPass,
+      };
+      const resp = await apis.postRegister(data);
       if (resp.status === 200) {
-        setIsLoggedIn(true);
+        setIsRegistered(true);
         toast.success("Log in correcto");
       }
     } catch (error) {
@@ -32,6 +36,7 @@ const LogIn = () => {
   const initialValues = {
     email: "",
     password: "",
+    confirmationPassword: "",
   };
 
   return (
@@ -56,12 +61,12 @@ const LogIn = () => {
           fontWeight: "600",
         }}
       >
-        Log in
+        Crea tu cuenta
       </div>
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
-        validationSchema={validationSchemaLogin}
+        validationSchema={validationSchemaRegister}
       >
         {({ values, handleChange, errors }) => (
           <Form>
@@ -90,7 +95,20 @@ const LogIn = () => {
                   type="password"
                   required
                 />
-              </Grid>{" "}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  name="confirmationPassword"
+                  fullWidth
+                  onChange={handleChange}
+                  value={values.confirmationPassword}
+                  label="Confirma tu contraseña"
+                  helperText={errors.confirmationPassword}
+                  type="password"
+                  required
+                />
+              </Grid>
               <Grid item xs={12}>
                 <Button
                   type="submit"
@@ -98,9 +116,9 @@ const LogIn = () => {
                   variant="outlined"
                   style={{ textTransform: "none", marginBottom: "20px" }}
                 >
-                  Confirmar
+                  Enviar
                 </Button>
-                <Paper style={{ display: 'flex', textAlign: "center", flexDirection: 'column' }}>
+                <Paper style={{ display: 'flex', textAlign: "center", flexDirection:'column'}} >
                   <div
                     style={{
                       fontFamily: "sans-serif",
@@ -109,16 +127,19 @@ const LogIn = () => {
                       paddingTop: '2%',
                     }}
                   >
-                    Aun no estas registardo?
+                    Ya estas registardo?
                   </div>
-                  <Link to={'/registar'} style={{
-                    paddingTop: '2%',
-                    paddingBottom: '3%',
-                    color: "#051675",
-                    fontSize: "11px",
-                    fontFamily: "Roboto",
-                  }}>
-                    Crea tu cuenta aqui
+                  <Link
+                    to={"/"}
+                    style={{
+                      paddingTop: '2%',
+                      paddingBottom: '3%',
+                      color: "#051675",
+                      fontSize: "11px",
+                      fontFamily: "Roboto",
+                    }}
+                  >
+                    Ingresa a tu cuenta aqui
                   </Link>
                 </Paper>
               </Grid>
@@ -130,4 +151,4 @@ const LogIn = () => {
   );
 };
 
-export default LogIn;
+export default Register;

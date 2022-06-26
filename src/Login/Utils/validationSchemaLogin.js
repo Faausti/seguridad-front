@@ -8,7 +8,7 @@ const validationSchemaLogin = Yup.object().shape({
     .required(REQUIRED)
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,}).*$/,
-      "Debe contener al menos 8 caracteres con una mayúscula, una minúscula y un número"
+      "Debe contener al menos 8 caracteres con al menos una mayúscula, una minúscula y un número"
     ),
 });
 
