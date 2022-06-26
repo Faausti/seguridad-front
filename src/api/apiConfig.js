@@ -9,8 +9,8 @@ const sApi = axios.create({
 });
 
 const apis = {
-  getPublicKey: () => sApi.get("/get-public-pass"),
   postLogin: (data) => sApi.post("/login", data),
+  postRegister: (data) => sApi.post("/register", data),
 };
 
 export default apis;
