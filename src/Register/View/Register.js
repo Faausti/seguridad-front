@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 
 const Register = () => {
   // const classes = useStyles();
-  const [isRegistered, setIsRegistered] = useState(false);
 
   const handleSubmit = async (values) => {
     try {
@@ -24,7 +23,6 @@ const Register = () => {
       };
       const resp = await apis.postRegister(data);
       if (resp.status === 200) {
-        setIsRegistered(true);
         toast.success("Log in correcto");
       }
     } catch (error) {

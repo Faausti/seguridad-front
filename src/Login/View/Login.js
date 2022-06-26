@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 
 const LogIn = () => {
   // const classes = useStyles();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleSubmit = async (values) => {
     try {
@@ -20,7 +19,6 @@ const LogIn = () => {
       const resp = await apis.postLogin(data);
 
       if (resp.status === 200) {
-        setIsLoggedIn(true);
         toast.success("Log in correcto");
       }
     } catch (error) {
