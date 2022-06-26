@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Grid,  Paper, TextField } from "@mui/material";
 import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import { Form, Formik } from "formik";
 
 import validationSchemaLogin from "../Utils/validationSchemaLogin";
@@ -10,7 +11,6 @@ import { Link } from "react-router-dom";
 
 const LogIn = () => {
   // const classes = useStyles();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleSubmit = async (values) => {
     try {
@@ -20,12 +20,10 @@ const LogIn = () => {
       const resp = await apis.postLogin(data);
 
       if (resp.status === 200) {
-        setIsLoggedIn(true);
         toast.success("Log in correcto");
       }
     } catch (error) {
       toast.error(error.response.data);
-      console.log(error.response.data);
     }
   };
 
