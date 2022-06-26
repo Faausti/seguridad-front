@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Grid, Paper, TextField } from "@mui/material";
 import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import { Form, Formik } from "formik";
 
 import { encryption } from "../../Utils/crypt";
@@ -23,11 +24,10 @@ const Register = () => {
       };
       const resp = await apis.postRegister(data);
       if (resp.status === 200) {
-        toast.success("Log in correcto");
+        toast.success("Registro correcto");
       }
     } catch (error) {
       toast.error(error.response.data);
-      console.log(error.response.data);
     }
   };
 

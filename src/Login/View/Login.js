@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Grid,  Paper, TextField } from "@mui/material";
 import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import { Form, Formik } from "formik";
 
 import validationSchemaLogin from "../Utils/validationSchemaLogin";
@@ -23,7 +24,6 @@ const LogIn = () => {
       }
     } catch (error) {
       toast.error(error.response.data);
-      console.log(error.response.data);
     }
   };
 
